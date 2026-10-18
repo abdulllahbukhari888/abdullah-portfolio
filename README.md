@@ -1,0 +1,3 @@
+# Muhammad Abdulah — Portfolio
+
+Run `npm install` and `npm run dev` inside this folder. Replace profile, projects, bio, social links, and contact details in `src/main.jsx`.
