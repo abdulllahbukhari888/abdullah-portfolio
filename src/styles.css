@@ -52,4 +52,6 @@
 .contact-socials a:hover{background:#102529;color:var(--a);border-color:var(--a)}
 .contact-socials a.instagram-link{padding:0;overflow:hidden;background:#020306;border-color:#173a88}
 .contact-socials a.instagram-link:hover{background:#020306;border-color:#246bff;box-shadow:0 0 18px #245cff77}
-.contact-socials a.instagram-link img{display:block;width:46px;height:46px;object-fit:cover;border-radius:12px}
+.contact-socials a.instagram-link img{display:block;width:46px;height:46px;object-fit:cover;border-radius:12px}.contact-socials a.whatsapp-link{padding:0;overflow:hidden;background:#020306;border-color:#173a88}
+.contact-socials a.whatsapp-link:hover{background:#020306;border-color:#246bff;box-shadow:0 0 18px #245cff77}
+.contact-socials a.whatsapp-link img{display:block;width:46px;height:46px;object-fit:cover;border-radius:12px}
