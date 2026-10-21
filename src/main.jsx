@@ -25,10 +25,73 @@ const services = [
 
 function App() {
   const [menu, setMenu] = useState(false); const [scrolled, setScrolled] = useState(false);
+  const [activeNav, setActiveNav] = useState(() => nav.find((item) => item.toLowerCase() === window.location.hash.slice(1)) || 'Home');
   const [stats, setStats] = useState([0, 0, 0]);
+  const linksRef = useRef(null);
+  const scrollLock = useRef(false);
+  const scrollTimer = useRef(null);
   const statsRef = useRef(null);
   const statsStarted = useRef(false);
   useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 28); window.addEventListener('scroll', onScroll); return () => window.removeEventListener('scroll', onScroll); }, []);
+  useEffect(() => {
+    let frame;
+    const updateFromScroll = () => {
+      const marker = window.scrollY + window.innerHeight * 0.36;
+      let current = nav[0];
+      nav.forEach((item) => {
+        const section = document.getElementById(item.toLowerCase());
+        if (section && section.offsetTop <= marker) current = item;
+      });
+      setActiveNav(current);
+    };
+    const onScroll = () => {
+      if (scrollLock.current || frame) return;
+      frame = requestAnimationFrame(() => { frame = null; updateFromScroll(); });
+    };
+    const onScrollEnd = () => {
+      scrollLock.current = false;
+      if (scrollTimer.current) clearTimeout(scrollTimer.current);
+      scrollTimer.current = null;
+      updateFromScroll();
+    };
+    const onHashChange = () => {
+      const item = nav.find((entry) => entry.toLowerCase() === window.location.hash.slice(1));
+      if (item) setActiveNav(item);
+      else updateFromScroll();
+    };
+    const initialItem = nav.find((item) => item.toLowerCase() === window.location.hash.slice(1));
+    if (initialItem) setActiveNav(initialItem);
+    else updateFromScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scrollend', onScrollEnd);
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scrollend', onScrollEnd);
+      window.removeEventListener('hashchange', onHashChange);
+      if (frame) cancelAnimationFrame(frame);
+      if (scrollTimer.current) clearTimeout(scrollTimer.current);
+    };
+  }, []);
+  useEffect(() => {
+    const container = linksRef.current;
+    if (!container) return;
+    const updateIndicator = () => {
+      const button = container.querySelector(`[data-nav-item="${activeNav}"]`);
+      if (!button) return;
+      const navRect = container.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      container.style.setProperty('--indicator-x', `${buttonRect.left - navRect.left}px`);
+      container.style.setProperty('--indicator-y', `${buttonRect.top - navRect.top}px`);
+      container.style.setProperty('--indicator-width', `${buttonRect.width}px`);
+      container.style.setProperty('--indicator-height', `${buttonRect.height}px`);
+    };
+    updateIndicator();
+    const observer = new ResizeObserver(updateIndicator);
+    observer.observe(container);
+    window.addEventListener('resize', updateIndicator);
+    return () => { observer.disconnect(); window.removeEventListener('resize', updateIndicator); };
+  }, [activeNav, menu]);
   useEffect(() => {
     const section = statsRef.current;
     if (!section) return;
@@ -52,10 +115,18 @@ function App() {
     observer.observe(section);
     return () => { observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
   }, []);
-  const jump = (item) => { setMenu(false); document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' }); };
+  const jump = (item) => {
+    setMenu(false);
+    setActiveNav(item);
+    window.history.replaceState(null, '', `#${item.toLowerCase()}`);
+    scrollLock.current = true;
+    if (scrollTimer.current) clearTimeout(scrollTimer.current);
+    scrollTimer.current = setTimeout(() => { scrollLock.current = false; scrollTimer.current = null; }, 1800);
+    document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
+  };
   return <><div className="ambient orb-one"/><div className="ambient orb-two"/><div className="noise"/>
     <header className={scrolled ? 'nav scrolled' : 'nav'}><a href="#home" className="brand" aria-label="Muhammad Abdullah home" onClick={(e)=>{e.preventDefault();jump('Home')}}><img src="/ma-logo.png" alt=""/><span>MUHAMMAD ABDULLAH</span></a>
-      <nav className={menu ? 'links open' : 'links'}>{nav.map(x=><button key={x} onClick={()=>jump(x)}>{x}</button>)}</nav>
+      <nav ref={linksRef} className={menu ? 'links open' : 'links'} aria-label="Main navigation"><span className="active-indicator" aria-hidden="true"/>{nav.map(x=><button key={x} type="button" data-nav-item={x} className={activeNav===x?'active':''} aria-current={activeNav===x?'location':undefined} onClick={()=>jump(x)}>{x}</button>)}</nav>
       <button className="nav-cta" onClick={()=>jump('Contact')}>Let’s talk <ArrowUpRight size={15}/></button>
       <button className="menu" aria-label="Open navigation" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button>
     </header>
