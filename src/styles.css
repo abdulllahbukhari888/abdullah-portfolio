@@ -67,3 +67,4 @@
 .contact-detail-icon.email-detail-icon{background:#020306;border:1px solid #173a88;transition:transform .2s,box-shadow .2s}.contact-detail-icon.email-detail-icon:hover{box-shadow:0 0 16px #245cff77;transform:translateY(-2px)}.email-detail-icon img{display:block;width:25px;height:25px;object-fit:contain;border-radius:4px}
 
 .contact-socials a.email-social-link{padding:0;overflow:hidden;background:#020306;border-color:#173a88}.contact-socials a.email-social-link:hover{background:#020306;border-color:#246bff;box-shadow:0 0 18px #245cff77}.contact-socials a.email-social-link img{display:block;width:22px;height:22px;object-fit:contain;border-radius:4px}
+.contact-detail-icon.location-detail-icon{overflow:hidden;background:#020306;border:1px solid #173a88}.location-detail-icon img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.8)}
