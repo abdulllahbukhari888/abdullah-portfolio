@@ -52,9 +52,9 @@
 .contact-socials a:hover{background:#102529;color:var(--a);border-color:var(--a)}
 .contact-socials a.instagram-link{padding:0;overflow:hidden;background:#020306;border-color:#173a88}
 .contact-socials a.instagram-link:hover{background:#020306;border-color:#246bff;box-shadow:0 0 18px #245cff77}
-.contact-socials a.instagram-link img{display:block;width:46px;height:46px;object-fit:cover;border-radius:12px}.contact-socials a.whatsapp-link{padding:0;overflow:hidden;background:#020306;border-color:#173a88}
+.contact-socials a.instagram-link img{display:block;width:22px;height:22px;object-fit:contain;border-radius:4px}.contact-socials a.whatsapp-link{padding:0;overflow:hidden;background:#020306;border-color:#173a88}
 .contact-socials a.whatsapp-link:hover{background:#020306;border-color:#246bff;box-shadow:0 0 18px #245cff77}
-.contact-socials a.whatsapp-link img{display:block;width:46px;height:46px;object-fit:cover;border-radius:12px}
+.contact-socials a.whatsapp-link img{display:block;width:22px;height:22px;object-fit:contain;border-radius:4px}
 /* One sliding active pill for the primary navigation */
 .links{position:relative;align-items:center;gap:14px}
 .links button{position:relative;z-index:1;padding:10px 12px;border-radius:999px;background:transparent;color:#aabbbf;white-space:nowrap;transition:color .22s ease}
