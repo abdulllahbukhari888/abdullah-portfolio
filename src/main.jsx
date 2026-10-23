@@ -7,7 +7,7 @@ const ArrowDownRight=icon('↘'), ArrowUpRight=icon('↗'), Braces=icon('{}'), C
 
 const nav = ['Home', 'About', 'Skills', 'Projects', 'Services', 'Contact'];
 const skills = [
-  ['HTML5', 96], ['CSS3 / Tailwind', 93], ['JavaScript', 90], ['React', 90], ['Next.js', 86], ['Node.js', 84], ['TypeScript', 82], ['Git / GitHub', 91]
+  ['HTML5', 96], ['CSS3 / Tailwind', 93], ['Git / GitHub', 91], ['JavaScript', 90], ['React', 90], ['Next.js', 86], ['Node.js', 84], ['TypeScript', 82]
 ];
 const projects = [
   { name: 'Aurelia Commerce', type: 'E-commerce platform', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=85', text: 'A refined shopping experience with real-time inventory, intuitive checkout and a headless storefront.', tags: ['Next.js', 'Stripe', 'PostgreSQL'] },
